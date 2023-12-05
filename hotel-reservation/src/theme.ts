@@ -9,6 +9,16 @@ const theme = createTheme({
             main: "#FF66B2",
         },
     },
+    components: {
+        MuiFormHelperText: {
+            styleOverrides: {
+                root:{
+                    marginLeft: 0
+                }
+            }
+        }
+
+    }
 } as const);
 
 export default theme;
