@@ -1,8 +1,0 @@
-{
-  "paymentMethods": [
-    { "id": 1, "name": "Credit Card" },
-    { "id": 2, "name": "Paypal" },
-    { "id": 3, "name": "Cash" },
-    { "id": 4, "name": "Bitcoin" }
-  ]
-}

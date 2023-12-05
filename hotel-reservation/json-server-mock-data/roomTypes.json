@@ -1,8 +1,0 @@
-{
-  "roomTypes": [
-    { "id": 1, "name": "single-room" },
-    { "id": 2, "name": "double-room" },
-    { "id": 3, "name": "business-suite" },
-    { "id": 3, "name": "presidential-suite" }
-  ]
-}
