@@ -48,5 +48,6 @@ jobs:
     - name: Deploy Frontend to S3
       run: |
         cd hotel-reservation
+        npm install
         npm run build
         aws s3 sync build/ s3://yujie-wu-reservation-website
