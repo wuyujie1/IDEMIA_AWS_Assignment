@@ -77,8 +77,8 @@ jobs:
     - name: Install Playwright Dependencies
       run: npm install
 
-    - name: Install Chromium for Playwright
-      run: npx playwright install chromium
+    - name: Install Browser
+      run: npx playwright install
 
     - name: Start App
       run: npm start &
