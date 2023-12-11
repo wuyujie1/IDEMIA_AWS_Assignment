@@ -35,5 +35,7 @@
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-var-requires": 0
     },
-    "ignorePatterns": ["*.js", "*.css"]
+    "ignorePatterns": [
+        "*.js", "*.css", "coverage/"
+    ]
 }
