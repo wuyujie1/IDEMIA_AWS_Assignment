@@ -1,4 +1,4 @@
-const states: string[] = [
+export const states: string[] = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
     "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
     "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
@@ -8,4 +8,11 @@ const states: string[] = [
     "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
 ];
 
-export default states;
+export const roomTypes = ["single-room", "double-room", "business-suite", "presidential-suite"];
+
+export const extrasOptions = ["extraBreakfast", "extraTV", "extraWiFi", "extraParking", "extraBalcony"];
+
+
+export const maxFirstNameLength = 25;
+export const maxLastNameLength = 25;
+export const maxRoomQuantity = 5;

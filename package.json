@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "@aws-sdk/client-athena": "^3.467.0",
+    "@aws-sdk/client-lambda": "^3.468.0",
+    "@aws-sdk/client-s3": "^3.468.0",
+    "@aws-sdk/client-sfn": "^3.468.0",
+    "athena-express": "^7.1.5",
+    "aws-sdk": "^2.1512.0",
+    "config": "^3.3.9",
+    "convert-csv-to-json": "^2.0.0",
+    "csvtojson": "^2.0.10",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.1",
+    "@types/aws-lambda": "^8.10.130",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/node": "^20.10.3",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "eslint": "^8.55.0"
+  },
+  "scripts": {}
+}
