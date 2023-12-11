@@ -32,7 +32,15 @@ jobs:
         for file in *.js; do
           if [[ -f $file ]] && [[ $file != *.test.js ]]; then
             FUNCTION_NAME="${file%.*}"
-            zip -r ${FUNCTION_NAME}.zip $file
+            if [[ $FUNCTION_NAME == "AwaitQueryEnds" || $FUNCTION_NAME == "FetchResults" ]]; then
+              cp $file index.js
+              zip -r ${FUNCTION_NAME}.zip index.js
+              rm index.js
+            else
+              cp $file index.mjs
+              zip -r ${FUNCTION_NAME}.zip index.mjs
+              rm index.mjs
+            fi
             aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://${FUNCTION_NAME}.zip
           fi
         done
