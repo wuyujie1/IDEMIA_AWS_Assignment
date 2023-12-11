@@ -34,61 +34,41 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { SFNClient, StartSyncExecutionCommand } from "@aws-sdk/client-sfn";
-import { mockClient } from "aws-sdk-client-mock";
-var sfnMock = mockClient(SFNClient);
-import { handler } from "./PrepareUpdateStatement";
-describe("Lambda Function Tests", function () {
-    it("should construct correct SQL UPDATE statement and call StartSyncExecutionCommand", function () { return __awaiter(void 0, void 0, void 0, function () {
-        var capturedParams, mockEvent, expectedQuery;
+var _a = require("@aws-sdk/client-sfn"), SFNClient = _a.SFNClient, StartSyncExecutionCommand = _a.StartSyncExecutionCommand;
+var mockClient = require("aws-sdk-client-mock").mockClient;
+var sfnMock_delete = mockClient(SFNClient);
+var lambdaHandler_delete = require("./PrepareDeleteQuery").handler;
+describe("Prepare Delete Statement", function () {
+    it("should process valid query parameters and start a sync execution", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var mockEvent, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    capturedParams = null;
-                    sfnMock.on(StartSyncExecutionCommand).callsFake(function (params) {
-                        capturedParams = params;
-                        return Promise.resolve({
-                            output: JSON.stringify({ result: "success" })
-                        });
+                    sfnMock_delete.on(StartSyncExecutionCommand).resolves({
+                        output: JSON.stringify({ result: "success" })
                     });
                     mockEvent = {
-                        queryStringParameters: { firstname: "test", lastname: "test" },
-                        body: JSON.stringify({ lastname: "updated" })
+                        queryStringParameters: { firstname: "test", lastname: "test" }
                     };
-                    return [4 /*yield*/, handler(mockEvent)];
+                    return [4 /*yield*/, lambdaHandler_delete(mockEvent)];
                 case 1:
-                    _a.sent();
-                    expectedQuery = "UPDATE ".concat(process.env.DB_NAME, ".").concat(process.env.TABLE_NAME, " SET lastname = 'updated' WHERE firstname = 'test' AND lastname = 'test'");
-                    expect(capturedParams).toBeTruthy();
-                    expect(JSON.parse(capturedParams.input).preparedQuery).toEqual(expectedQuery);
+                    response = _a.sent();
+                    expect(response.statusCode).toBe(200);
+                    expect(JSON.parse(response.body)).toEqual({ result: "success" });
                     return [2 /*return*/];
             }
         });
     }); });
     it("should handle errors gracefully", function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, handler({ queryStringParameters: { key1: "value1" } })];
-                case 1:
-                    response = _a.sent();
-                    expect(response.statusCode).toBe(500);
-                    expect(response.body).toBe(JSON.stringify({ message: "Request Body Not Found" }));
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    it("should handle Step Functions execution errors", function () { return __awaiter(void 0, void 0, void 0, function () {
         var mockEvent, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    sfnMock.on(StartSyncExecutionCommand).rejects(new Error("Mocked error"));
+                    sfnMock_delete.on(StartSyncExecutionCommand).rejects(new Error("Error in Step Function Execution"));
                     mockEvent = {
-                        body: JSON.stringify({ firstname: "test" }),
                         queryStringParameters: { firstname: "test" }
                     };
-                    return [4 /*yield*/, handler(mockEvent)];
+                    return [4 /*yield*/, lambdaHandler_delete(mockEvent)];
                 case 1:
                     response = _a.sent();
                     expect(response.statusCode).toBe(500);
@@ -97,4 +77,30 @@ describe("Lambda Function Tests", function () {
             }
         });
     }); });
+    it("should call StartSyncExecutionCommand with correct SQL statement for DELETE operation", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var capturedParams, mockEvent, expectedQuery;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    capturedParams = null;
+                    sfnMock_delete.on(StartSyncExecutionCommand).callsFake(function (params) {
+                        capturedParams = params;
+                        return Promise.resolve({
+                            output: JSON.stringify({ result: "success" })
+                        });
+                    });
+                    mockEvent = {
+                        queryStringParameters: { firstname: "test", lastname: "testlastname" }
+                    };
+                    return [4 /*yield*/, lambdaHandler_delete(mockEvent)];
+                case 1:
+                    _a.sent();
+                    expectedQuery = "DELETE FROM ".concat(process.env.DB_NAME, ".").concat(process.env.TABLE_NAME, " WHERE firstname = 'test' AND lastname = 'testlastname'");
+                    expect(capturedParams).toBeTruthy();
+                    expect(JSON.parse(capturedParams.input).preparedQuery).toEqual(expectedQuery);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
 });
+export {};

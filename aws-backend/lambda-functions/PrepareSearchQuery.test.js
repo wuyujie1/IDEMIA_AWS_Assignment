@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import { SFNClient, StartSyncExecutionCommand } from "@aws-sdk/client-sfn";
 import { mockClient } from "aws-sdk-client-mock";
 var sfnMock = mockClient(SFNClient);
-import { handler } from "./PrepareSearchStatement";
+import { handler } from "./PrepareSearchQuery";
 describe("Prepare Search Statement", function () {
     it("should call StartSyncExecutionCommand with correct SQL statement for SEARCH operation", function () { return __awaiter(void 0, void 0, void 0, function () {
         var capturedParams, mockEvent, expectedQuery;

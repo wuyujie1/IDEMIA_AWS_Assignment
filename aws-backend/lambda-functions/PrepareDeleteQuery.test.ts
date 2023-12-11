@@ -3,7 +3,7 @@ const { mockClient } = require("aws-sdk-client-mock");
 
 const sfnMock_delete = mockClient(SFNClient);
 
-const lambdaHandler_delete = require("./PrepareDeleteStatement").handler;
+const lambdaHandler_delete = require("./PrepareDeleteQuery").handler;
 describe("Prepare Delete Statement", () => {
 
     it("should process valid query parameters and start a sync execution", async () => {

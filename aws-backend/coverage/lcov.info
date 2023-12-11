@@ -904,7 +904,7 @@ BRF:85
 BRH:40
 end_of_record
 TN:
-SF:lambda-functions\PrepareCreateStatement.js
+SF:lambda-functions\PrepareCreateQuery.js
 FN:1,(anonymous_0)
 FN:2,adopt
 FN:2,(anonymous_2)
@@ -1092,7 +1092,7 @@ BRF:82
 BRH:51
 end_of_record
 TN:
-SF:lambda-functions\PrepareDeleteStatement.js
+SF:lambda-functions\PrepareDeleteQuery.js
 FN:1,(anonymous_0)
 FN:2,adopt
 FN:2,(anonymous_2)
@@ -1286,7 +1286,7 @@ BRF:86
 BRH:53
 end_of_record
 TN:
-SF:lambda-functions\PrepareSearchStatement.js
+SF:lambda-functions\PrepareSearchQuery.js
 FN:1,(anonymous_0)
 FN:2,adopt
 FN:2,(anonymous_2)
@@ -1482,7 +1482,7 @@ BRF:88
 BRH:54
 end_of_record
 TN:
-SF:lambda-functions\PrepareUpdateStatement.js
+SF:lambda-functions\PrepareUpdateQuery.js
 FN:1,(anonymous_0)
 FN:2,adopt
 FN:2,(anonymous_2)

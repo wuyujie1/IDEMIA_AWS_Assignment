@@ -1,7 +1,7 @@
 import { SFNClient, StartSyncExecutionCommand } from "@aws-sdk/client-sfn";
 import { mockClient } from "aws-sdk-client-mock";
 const sfnMock = mockClient(SFNClient);
-import { handler } from "./PrepareSearchStatement";
+import { handler } from "./PrepareSearchQuery";
 
 
 describe("Prepare Search Statement", () => {

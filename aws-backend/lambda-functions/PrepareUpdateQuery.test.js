@@ -34,64 +34,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _a = require("@aws-sdk/client-sfn"), SFNClient = _a.SFNClient, StartSyncExecutionCommand = _a.StartSyncExecutionCommand;
-var mockClient = require("aws-sdk-client-mock").mockClient;
+import { SFNClient, StartSyncExecutionCommand } from "@aws-sdk/client-sfn";
+import { mockClient } from "aws-sdk-client-mock";
 var sfnMock = mockClient(SFNClient);
-var lambdaHandler_create = require("./PrepareCreateStatement").handler;
-describe("Prepare Create Statement", function () {
-    it("should process valid input and start a sync execution", function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockEvent, response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    sfnMock.on(StartSyncExecutionCommand).resolves({
-                        output: JSON.stringify({ result: "success" })
-                    });
-                    mockEvent = {
-                        body: JSON.stringify({ firstname: "test", lastname: "test" })
-                    };
-                    return [4 /*yield*/, lambdaHandler_create(mockEvent)];
-                case 1:
-                    response = _a.sent();
-                    expect(response.statusCode).toBe(200);
-                    expect(JSON.parse(response.body)).toEqual({ result: "success" });
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    it("should return an error when body is missing", function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockEvent, response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    mockEvent = {};
-                    return [4 /*yield*/, lambdaHandler_create(mockEvent)];
-                case 1:
-                    response = _a.sent();
-                    expect(response.statusCode).toBe(500);
-                    expect(response.body).toBe(JSON.stringify({ message: "Request Body Not Found" }));
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    it("should handle errors gracefully", function () { return __awaiter(void 0, void 0, void 0, function () {
-        var mockEvent, response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    mockEvent = {
-                        body: "invalid test body"
-                    };
-                    return [4 /*yield*/, lambdaHandler_create(mockEvent)];
-                case 1:
-                    response = _a.sent();
-                    expect(response.statusCode).toBe(500);
-                    expect(response.body).toBe(JSON.stringify({ message: "Internal Server Error" }));
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    it("should call StartSyncExecutionCommand with correct SQL statement for INSERT operation", function () { return __awaiter(void 0, void 0, void 0, function () {
+import { handler } from "./PrepareUpdateQuery";
+describe("Lambda Function Tests", function () {
+    it("should construct correct SQL UPDATE statement and call StartSyncExecutionCommand", function () { return __awaiter(void 0, void 0, void 0, function () {
         var capturedParams, mockEvent, expectedQuery;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -104,17 +52,49 @@ describe("Prepare Create Statement", function () {
                         });
                     });
                     mockEvent = {
-                        body: JSON.stringify({ firstname: "test", lastname: "testlast" })
+                        queryStringParameters: { firstname: "test", lastname: "test" },
+                        body: JSON.stringify({ lastname: "updated" })
                     };
-                    return [4 /*yield*/, lambdaHandler_create(mockEvent)];
+                    return [4 /*yield*/, handler(mockEvent)];
                 case 1:
                     _a.sent();
-                    expectedQuery = "INSERT INTO ".concat(process.env.DB_NAME, ".").concat(process.env.TABLE_NAME, " (firstname, lastname) VALUES ('test', 'testlast')");
+                    expectedQuery = "UPDATE ".concat(process.env.DB_NAME, ".").concat(process.env.TABLE_NAME, " SET lastname = 'updated' WHERE firstname = 'test' AND lastname = 'test'");
                     expect(capturedParams).toBeTruthy();
                     expect(JSON.parse(capturedParams.input).preparedQuery).toEqual(expectedQuery);
                     return [2 /*return*/];
             }
         });
     }); });
+    it("should handle errors gracefully", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, handler({ queryStringParameters: { key1: "value1" } })];
+                case 1:
+                    response = _a.sent();
+                    expect(response.statusCode).toBe(500);
+                    expect(response.body).toBe(JSON.stringify({ message: "Request Body Not Found" }));
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("should handle Step Functions execution errors", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var mockEvent, response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    sfnMock.on(StartSyncExecutionCommand).rejects(new Error("Mocked error"));
+                    mockEvent = {
+                        body: JSON.stringify({ firstname: "test" }),
+                        queryStringParameters: { firstname: "test" }
+                    };
+                    return [4 /*yield*/, handler(mockEvent)];
+                case 1:
+                    response = _a.sent();
+                    expect(response.statusCode).toBe(500);
+                    expect(response.body).toBe(JSON.stringify({ message: "Internal Server Error" }));
+                    return [2 /*return*/];
+            }
+        });
+    }); });
 });
-export {};

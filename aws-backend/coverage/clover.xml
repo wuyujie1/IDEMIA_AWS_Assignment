@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1702269327731" clover="3.2.0">
-  <project timestamp="1702269327731" name="All files">
+<coverage generated="1702280890533" clover="3.2.0">
+  <project timestamp="1702280890533" name="All files">
     <metrics statements="518" coveredstatements="455" conditionals="757" coveredconditionals="462" methods="168" coveredmethods="142" elements="1443" coveredelements="1059" complexity="0" loc="518" ncloc="518" packages="1" files="9" classes="9"/>
     <file name="AthenaQuery.js" path="C:\Users\wyj12\OneDrive\桌面\IDEMIA_AWS_Assignment\aws-backend\lambda-functions\AthenaQuery.js">
       <metrics statements="49" coveredstatements="45" conditionals="78" coveredconditionals="50" methods="17" coveredmethods="15"/>
@@ -280,7 +280,7 @@
       <line num="75" count="0" type="stmt"/>
       <line num="80" count="0" type="stmt"/>
     </file>
-    <file name="PrepareCreateStatement.js" path="C:\Users\wyj12\OneDrive\桌面\IDEMIA_AWS_Assignment\aws-backend\lambda-functions\PrepareCreateStatement.js">
+    <file name="PrepareCreateQuery.js" path="C:\Users\wyj12\OneDrive\桌面\IDEMIA_AWS_Assignment\aws-backend\lambda-functions\PrepareCreateQuery.js">
       <metrics statements="59" coveredstatements="54" conditionals="82" coveredconditionals="51" methods="19" coveredmethods="16"/>
       <line num="1" count="2" type="cond" truecount="2" falsecount="1"/>
       <line num="2" count="4" type="cond" truecount="1" falsecount="1"/>
@@ -342,7 +342,7 @@
       <line num="82" count="2" type="stmt"/>
       <line num="83" count="0" type="stmt"/>
     </file>
-    <file name="PrepareDeleteStatement.js" path="C:\Users\wyj12\OneDrive\桌面\IDEMIA_AWS_Assignment\aws-backend\lambda-functions\PrepareDeleteStatement.js">
+    <file name="PrepareDeleteQuery.js" path="C:\Users\wyj12\OneDrive\桌面\IDEMIA_AWS_Assignment\aws-backend\lambda-functions\PrepareDeleteQuery.js">
       <metrics statements="63" coveredstatements="56" conditionals="86" coveredconditionals="53" methods="18" coveredmethods="16"/>
       <line num="1" count="2" type="cond" truecount="2" falsecount="1"/>
       <line num="2" count="6" type="cond" truecount="1" falsecount="1"/>
@@ -408,7 +408,7 @@
       <line num="92" count="2" type="stmt"/>
       <line num="93" count="0" type="stmt"/>
     </file>
-    <file name="PrepareSearchStatement.js" path="C:\Users\wyj12\OneDrive\桌面\IDEMIA_AWS_Assignment\aws-backend\lambda-functions\PrepareSearchStatement.js">
+    <file name="PrepareSearchQuery.js" path="C:\Users\wyj12\OneDrive\桌面\IDEMIA_AWS_Assignment\aws-backend\lambda-functions\PrepareSearchQuery.js">
       <metrics statements="63" coveredstatements="56" conditionals="88" coveredconditionals="54" methods="18" coveredmethods="16"/>
       <line num="1" count="2" type="cond" truecount="2" falsecount="1"/>
       <line num="2" count="4" type="cond" truecount="1" falsecount="1"/>
@@ -474,7 +474,7 @@
       <line num="91" count="2" type="stmt"/>
       <line num="92" count="0" type="stmt"/>
     </file>
-    <file name="PrepareUpdateStatement.js" path="C:\Users\wyj12\OneDrive\桌面\IDEMIA_AWS_Assignment\aws-backend\lambda-functions\PrepareUpdateStatement.js">
+    <file name="PrepareUpdateQuery.js" path="C:\Users\wyj12\OneDrive\桌面\IDEMIA_AWS_Assignment\aws-backend\lambda-functions\PrepareUpdateQuery.js">
       <metrics statements="70" coveredstatements="63" conditionals="92" coveredconditionals="58" methods="19" coveredmethods="17"/>
       <line num="1" count="2" type="cond" truecount="2" falsecount="1"/>
       <line num="2" count="4" type="cond" truecount="1" falsecount="1"/>
