@@ -65,6 +65,9 @@ jobs:
     - name: Install Playwright Dependencies
       run: npm install
 
+    - name: Install Browser
+      run: npx playwright install
+
     - name: Install dependencies for hotel-reservation
       run: |
         cd hotel-reservation
