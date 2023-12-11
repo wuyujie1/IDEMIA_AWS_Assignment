@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        node-version: '16'
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
@@ -39,6 +41,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        node-version: '16'
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
@@ -62,17 +66,25 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        node-version: '16'
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14'
+        node-version: '16'
 
     - name: Install Playwright Dependencies
       run: npm install
 
+    - name: Install Browser
+      run: npx playwright install
+
     - name: Start App
-      run: npm start &
+      run: |
+        cd hotel-reservation
+        npm install
+        npm start
 
     - name: Run Playwright E2E Tests
       run: npm run test
