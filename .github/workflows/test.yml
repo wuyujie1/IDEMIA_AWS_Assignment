@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        node-version: '16'
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
@@ -39,6 +41,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        node-version: '16'
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
@@ -58,15 +62,17 @@ jobs:
       run: npm test
 
   playwright-e2e-tests:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        node-version: '16'
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '17'
+        node-version: '16'
 
     - name: Install Playwright Dependencies
       run: npm install
