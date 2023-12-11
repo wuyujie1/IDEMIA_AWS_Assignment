@@ -60,8 +60,8 @@ describe("SearchCriteria", () => {
         render(<SearchCriteria />);
         await act (async () => {
             const firstNameInput = screen.getByLabelText("First Name") as HTMLInputElement;
-            await userEvent.type(firstNameInput, "Test");
-            expect(firstNameInput.value).toBe("Test");
+            await userEvent.type(firstNameInput, "test");
+            expect(firstNameInput.value).toBe("test");
         });
 
     });
