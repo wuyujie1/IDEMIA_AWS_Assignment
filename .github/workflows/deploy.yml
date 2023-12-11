@@ -18,8 +18,6 @@ jobs:
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
-      with:
-        node-version: '16'
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -28,14 +26,19 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    # - name: Deploy to AWS Lambda
-    #   run: |
-    #     # Commands to deploy backend to AWS Lambda
-    #     # Example:
-    #     # zip -r function.zip .
-    #     # aws lambda update-function-code --function-name <FUNCTION_NAME> --zip-file fileb://function.zip
+    - name: Deploy Lambda Functions
+      run: |
+        cd aws-backend/lambda-functions
+        for file in *.js; do
+          if [[ -f $file ]] && [[ $file != *.test.js ]]; then
+            FUNCTION_NAME="${file%.*}"
+            zip -r ${FUNCTION_NAME}.zip $file
+            aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://${FUNCTION_NAME}.zip
+          fi
+        done
 
     - name: Deploy Frontend to S3
       run: |
+        cd hotel-reservation
         npm run build
         aws s3 sync build/ s3://yujie-wu-reservation-website
