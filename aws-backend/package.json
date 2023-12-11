@@ -46,6 +46,8 @@
     ]
   },
   "dependencies": {
+    "@aws-sdk/client-athena": "^3.470.0",
+    "@aws-sdk/client-sfn": "^3.470.0",
     "dotenv": "^16.3.1"
   }
 }
