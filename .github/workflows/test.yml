@@ -1,0 +1,78 @@
+name: Test Workflow
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths-ignore:
+      - '**/*.md'
+
+jobs:
+  frontend-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./hotel-reservation
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install Frontend Dependencies
+      run: npm install
+
+    - name: ESLint Check (Frontend)
+      run: npm run lint
+
+    - name: Run Jest Tests (Frontend)
+      run: npm test
+
+  backend-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./aws-backend
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install Backend Dependencies
+      run: npm install
+
+    - name: ESLint Check (Backend)
+      run: npm run lint
+
+    - name: Compile TypeScript to JavaScript (Backend)
+      run: npm run build
+
+    - name: Run Jest Tests (Backend)
+      run: npm test
+
+  playwright-e2e-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Playwright Dependencies
+      run: npm install
+
+    - name: Start App
+      run: npm start &
+
+    - name: Run Playwright E2E Tests
+      run: npm run test
