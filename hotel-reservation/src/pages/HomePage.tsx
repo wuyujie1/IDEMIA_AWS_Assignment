@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import SearchCriteria from "../components/SearchCriteria";
 import SearchResult from "../components/SearchResult";
 
