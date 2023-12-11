@@ -62,18 +62,22 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
 
-
     - name: Install Playwright Dependencies
       run: npm install
 
-    - name: Install Browser
-      run: npx playwright install
-
-    - name: Start App
+    - name: Install dependencies for hotel-reservation
       run: |
         cd hotel-reservation
         npm install
-        npm start
 
-    - name: Run Playwright E2E Tests
+    - name: Start Application in Background
+      run: |
+        cd hotel-reservation
+        nohup npm start &
+
+    - name: Wait for Application to be Ready
+      run: |
+        wget --retry-connrefused --no-check-certificate -T 30 http://localhost:3000
+
+    - name: Run Playwright tests
       run: npm run test
