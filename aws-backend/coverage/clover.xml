@@ -172,7 +172,7 @@
       <line num="90" count="0" type="stmt"/>
       <line num="94" count="0" type="stmt"/>
     </file>
-    <file name="FetchResult.js" path="C:\Users\wyj12\OneDrive\桌面\IDEMIA_AWS_Assignment\aws-backend\lambda-functions\FetchResult.js">
+    <file name="FetchResults.js" path="C:\Users\wyj12\OneDrive\桌面\IDEMIA_AWS_Assignment\aws-backend\lambda-functions\FetchResults.js">
       <metrics statements="48" coveredstatements="45" conditionals="78" coveredconditionals="51" methods="19" coveredmethods="17"/>
       <line num="2" count="2" type="cond" truecount="2" falsecount="1"/>
       <line num="3" count="8" type="cond" truecount="1" falsecount="1"/>

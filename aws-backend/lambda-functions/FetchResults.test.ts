@@ -3,7 +3,7 @@ const AWSMock_fetch_result = require("aws-sdk-mock");
 const AWS_fetch_result = require("aws-sdk");
 AWSMock_fetch_result.setSDKInstance(AWS_fetch_result);
 
-const lambdaHandler_fetch_result = require("./FetchResult").handler;
+const lambdaHandler_fetch_result = require("./FetchResults").handler;
 
 
 describe("Fetch Results", () => {
