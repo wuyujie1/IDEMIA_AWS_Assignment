@@ -71,5 +71,8 @@ jobs:
     - name: Install Playwright Dependencies
       run: npm install
 
+    - name: Start App
+      run: npm start &
+
     - name: Run Playwright E2E Tests
       run: npm run test
