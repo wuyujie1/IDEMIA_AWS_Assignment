@@ -20,7 +20,7 @@ describe("Prepare Search Statement", () => {
         };
         await handler(mockEvent);
 
-        const expectedQuery = `SELECT * FROM ${process.env.DB_NAME}.${process.env.TABLE_NAME} WHERE 1=1 AND firstname = 'test' AND lastname = 'testlastname'`;
+        const expectedQuery = `SELECT * FROM ${process.env.DB_NAME}.${process.env.TABLE_NAME} WHERE 1=1 AND upper(firstname) LIKE upper('test') AND upper(lastname) LIKE upper('testlastname')`;
 
         expect(capturedParams).toBeTruthy();
         expect(JSON.parse(capturedParams.input).preparedQuery).toEqual(expectedQuery);
