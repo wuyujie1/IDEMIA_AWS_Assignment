@@ -71,9 +71,9 @@ describe("ModalDialog", () => {
 
         await act (async () => {
             userEvent.clear(roomQuantityInput);
-            userEvent.type(roomQuantityInput, "7");
+            userEvent.type(roomQuantityInput, "6");
         });
-        expect(roomQuantityInput.value).not.toBe("7");
+        expect(roomQuantityInput.value).not.toBe("6");
 
         await act (async () => {
             userEvent.clear(roomQuantityInput);
