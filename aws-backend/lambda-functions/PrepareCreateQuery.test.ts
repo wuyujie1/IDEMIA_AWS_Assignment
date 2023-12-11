@@ -1,7 +1,7 @@
 const { SFNClient, StartSyncExecutionCommand } = require("@aws-sdk/client-sfn");
 const { mockClient } = require("aws-sdk-client-mock");
 const sfnMock = mockClient(SFNClient);
-const lambdaHandler_create = require("./PrepareCreateStatement").handler;
+const lambdaHandler_create = require("./PrepareCreateQuery").handler;
 
 describe("Prepare Create Statement", () => {
     it("should process valid input and start a sync execution", async () => {

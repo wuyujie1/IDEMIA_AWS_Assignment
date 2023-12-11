@@ -1,7 +1,7 @@
 import { SFNClient, StartSyncExecutionCommand } from "@aws-sdk/client-sfn";
 import { mockClient } from "aws-sdk-client-mock";
 const sfnMock = mockClient(SFNClient);
-import { handler } from "./PrepareUpdateStatement";
+import { handler } from "./PrepareUpdateQuery";
 
 describe("Lambda Function Tests", () => {
 

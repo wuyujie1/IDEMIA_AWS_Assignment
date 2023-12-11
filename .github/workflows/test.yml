@@ -16,13 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        node-version: '16'
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
-      with:
-        node-version: '16'
 
     - name: Install Frontend Dependencies
       run: npm install
@@ -41,13 +37,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        node-version: '16'
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
-      with:
-        node-version: '16'
 
     - name: Install Backend Dependencies
       run: npm install
@@ -66,13 +58,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        node-version: '16'
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
-      with:
-        node-version: '16'
 
     - name: Install Playwright Dependencies
       run: npm install
@@ -80,11 +68,35 @@ jobs:
     - name: Install Browser
       run: npx playwright install
 
-    - name: Start App
+    - name: Install dependencies for hotel-reservation
       run: |
         cd hotel-reservation
         npm install
-        npm start
 
-    - name: Run Playwright E2E Tests
+    - name: Start Application in Background
+      run: |
+        cd hotel-reservation
+        nohup npm start &
+
+    - name: Wait for Application to be Ready
+      run: |
+        wget --retry-connrefused --no-check-certificate -T 30 http://localhost:3000
+
+    - name: Run Playwright tests
       run: npm run test
+
+  create-pull-request:
+    runs-on: ubuntu-latest
+    needs: [ frontend-tests, backend-tests, playwright-e2e-tests ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'Update integration'
+          title: 'Auto PR from CI'
+          body: 'This is an auto-generated PR from CI'
+          branch: 'auto-pr-${{ github.run_number }}'
+          base: 'main'
