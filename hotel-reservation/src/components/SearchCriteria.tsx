@@ -1,39 +1,56 @@
-import React, { useState } from "react";
-import {
-    FormControl,
-    TextField,
-    Grid,
-    InputLabel,
-    NativeSelect,
-    FormHelperText, InputAdornment, Autocomplete
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Grid, InputAdornment, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { fetchUserInputOptions } from "../hooks/fetchUserInputOptions";
-import states from "../utils/states";
+import { BehaviorSubject } from "rxjs";
+import dayjs from "dayjs";
+import { maxFirstNameLength, maxLastNameLength } from "../utils/configs";
+import { SearchParams } from "../utils/interface";
+import InputNames from "./InputNames";
 
-interface Option {
-    id: number;
-    name: string;
-}
+const initialValues: SearchParams = {
+    arrivaldate: null,
+    departuredate: null,
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+};
 
+const search = new BehaviorSubject(initialValues);
+export const search$ = search.asObservable();
 function SearchCriteria() {
-    const maxFirstNameLength = 25;
-    const maxLastNameLength = 25;
-    const maxRoomQuant = 5;
-    const roomTypes: Option[] = fetchUserInputOptions("roomTypes");
+    const [values, setValues] = useState(initialValues);
+
+    useEffect(() => {
+        search.next(values);
+    }, [values]);
+
+    const handleTextFieldChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        const {name, value} = e.target;
+        if (value.includes("&") || value.includes("=")) {
+            return;
+        }
+        setValues({
+            ...values,
+            [name]:value
+        });
+    };
+    const handleDateChange = (field: string, newDate: dayjs.Dayjs | null) => {
+        if (newDate != null) setValues({...values, [field]: newDate});
+    };
 
     return (
         <form>
-            <Grid container spacing={1} >
-
+            <Grid container spacing={1}>
                 <Grid item xs={5} sm={2}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             label="Date of Arrival"
-                            slotProps={{ textField: { variant: "standard", } }}
-                            //value={}
+                            slotProps={{ textField: { variant: "standard"} }}
+                            onChange={(newDate: dayjs.Dayjs | null) => {handleDateChange("arrivaldate", newDate);}}
+                            value={values.arrivaldate}
                         />
                     </LocalizationProvider>
                 </Grid>
@@ -41,142 +58,42 @@ function SearchCriteria() {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             label="Date of Departure"
-                            slotProps={{ textField: { variant: "standard", } }}
-                            //value={}
+                            slotProps={{ textField: { variant: "standard" } }}
+                            onChange={(newDate: dayjs.Dayjs | null) => {handleDateChange("departuredate", newDate);}}
+                            value={values.departuredate}
                         />
                     </LocalizationProvider>
                 </Grid>
 
-                <Grid item xs={2} sm={8}>
-                    {/*Empty item, enforces new row for the next grid item*/}
+                <Grid item xs={5} sm={2}>
+                    <InputNames name="firstname" label="First Name" value={values.firstname} maxLength={maxFirstNameLength} onChange={handleTextFieldChange}/>
+                </Grid>
+                <Grid item xs={5} sm={2}>
+                    <InputNames name="lastname" label="Last Name" value={values.lastname} maxLength={maxLastNameLength} onChange={handleTextFieldChange}/>
                 </Grid>
 
                 <Grid item xs={5} sm={2}>
-                    <FormControl fullWidth>
-                        <InputLabel variant="standard" shrink={true}>
-                            Room Size
-                        </InputLabel>
-                        <NativeSelect
-                            defaultValue={roomTypes[0]?.name}
-                            inputProps={{
-                                name: "roomSize",
-                                id: "roomSize",
-                            }}
-                        >
-                            {roomTypes.map((roomType) => (
-                                <option key={roomType.id} value={roomType.name}>{roomType.name}</option >
-                            ))}
-                        </NativeSelect>
-                        <FormHelperText>Choose a room type</FormHelperText>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={5} sm={2}>
-                    <TextField fullWidth
-                        id="roomQuantity"
-                        label="Room Quantity"
-                        variant="standard"
-                        type="number"
-                        InputProps={{ inputProps: { min: 1, max: maxRoomQuant} }}
-                        //value={firstName}
-                        helperText={`Maximum: ${maxRoomQuant}`}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={12}>
                     <TextField
-                        id="firstName"
-                        label="First Name"
-                        variant="standard"
-                        inputProps={{ maxLength: maxFirstNameLength }}
-                        //value={firstName}
-                        helperText={`12/${maxFirstNameLength}`}
-                        FormHelperTextProps={{style: {textAlign: "right"}}}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                    <TextField
-                        id="lastName"
-                        label="Last Name"
-                        variant="standard"
-                        inputProps={{ maxLength: maxLastNameLength }}
-                        //value={lastName}
-                        helperText={`12/${maxLastNameLength}`}
-                        FormHelperTextProps={{style: {textAlign: "right"}}}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                    <TextField
-                        id="email"
+                        name="email"
                         label="E-Mail"
                         variant="standard"
-                        //value={email}
+                        value={values.email}
+                        onChange={handleTextFieldChange}
                     />
                 </Grid>
-                <Grid item xs={12} sm={12}>
+                <Grid item xs={5} sm={2}>
                     <TextField
-                        id="phoneNum"
+                        name="phone"
                         label="Phone Number"
                         variant="standard"
                         InputProps={{
-                            startAdornment: <InputAdornment position="start">+</InputAdornment>,
+                            startAdornment: <InputAdornment position="start">+</InputAdornment>
                         }}
                         type="number"
                         placeholder="1234567890"
-                        //value={email}
+                        value={values.phone}
+                        onChange={handleTextFieldChange}
                         helperText="Add your country code first"
-                    />
-                </Grid>
-                <Grid item xs={5} sm={2}>
-                    <TextField
-                        id="streetName"
-                        label="Street Name"
-                        variant="standard"
-                        //value={streetName}
-                    />
-                </Grid>
-                <Grid item xs={5} sm={2}>
-                    <TextField
-                        id="streetNumber"
-                        label="Street Number"
-                        variant="standard"
-                        //value={streetNumber}
-                        type="number"
-                    />
-                </Grid>
-
-                <Grid item xs={2} sm={8}>
-                    {/*Empty item, enforces new row for the next grid item*/}
-                </Grid>
-                
-                <Grid item xs={5} sm={2}>
-                    <TextField
-                        id="zip"
-                        label="ZIP"
-                        variant="standard"
-                        //value={zip}
-                    />
-                </Grid>
-                <Grid item xs={5} sm={2}>
-                    <Autocomplete
-                        id="state"
-                        freeSolo
-                        options={states}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="State"
-                                variant="standard"
-                                helperText="Autocomplete"
-                            >
-                            </TextField>
-                        )}
-                    />
-                </Grid>
-                <Grid item xs={5} sm={2}>
-                    <TextField
-                        id="city"
-                        label="City"
-                        variant="standard"
-                        //value={city}
                     />
                 </Grid>
             </Grid>
