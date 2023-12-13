@@ -3,4 +3,4 @@ For details, please refer to the attached .pdf file in the email. AWS credential
 
 
 # Update
-I decoupled the CRUD logic (in a custom hook called useCRUD) from UI in SearchResult component, code looked a bit cleaner. However, I am having some trouble testing the RXJS observables. I'm ifguring it out :)
+I decoupled the CRUD logic (in a custom hook called useCRUD) from UI in SearchResult component, code looked a bit cleaner. However, I am having some trouble testing the RXJS observables. I'm figuring it out :)
