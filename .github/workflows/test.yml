@@ -84,19 +84,3 @@ jobs:
 
     - name: Run Playwright tests
       run: npm run test
-
-  create-pull-request:
-    runs-on: ubuntu-latest
-    needs: [ frontend-tests, backend-tests, playwright-e2e-tests ]
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'Update integration'
-          title: 'Auto PR from CI'
-          body: 'This is an auto-generated PR from CI'
-          branch: 'auto-pr-${{ github.run_number }}'
-          base: 'main'
