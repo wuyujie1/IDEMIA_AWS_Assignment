@@ -3,7 +3,6 @@ import { debounceTime, Observable, switchMap } from "rxjs";
 import dayjs from "dayjs";
 import { ajax } from "rxjs/ajax";
 import { ApiData, SearchParams } from "../utils/interface";
-import React from "react";
 import { convertDayToString } from "../utils/utils";
 
 const API_ENDPOINT = process.env.REACT_APP_API_GATEWAY_URL;
@@ -20,11 +19,10 @@ export function prepareFetchingURL(searchParams: SearchParams): string {
         }).join("&");
 }
 
-function searchReservation(setDataUpdating: React.Dispatch<React.SetStateAction<boolean>>): Observable<ApiData> {
+function searchReservation(): Observable<ApiData> {
     return search$.pipe(
         debounceTime(500),
         switchMap(searchParams => {
-            setDataUpdating(true);
             const query = prepareFetchingURL(searchParams);
             const url = `${API_ENDPOINT}?${query}`;
             return ajax.getJSON<ApiData>(url);

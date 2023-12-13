@@ -31,16 +31,14 @@ describe("ModalDialog", () => {
     };
 
     const mockOnClose = jest.fn();
-    const mockOnUpdate = jest.fn();
-    const mockOnDelete = jest.fn();
+    const mockSetIsLoading = jest.fn();
 
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
     it("handles changes to the arrival date", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate}
-            onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const arrivalDatePicker = screen.getByLabelText("Date of Arrival") as HTMLInputElement;
         await act (async () => {
             await userEvent.type(arrivalDatePicker, "09202022");
@@ -49,8 +47,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to the departure date", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate}
-            onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const departureDatePicker = screen.getByLabelText("Date of Departure")  as HTMLInputElement;
         await act (async () => {
             await userEvent.type(departureDatePicker, "09202022");
@@ -59,8 +56,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to the room quantity and only accepts numbers between 1 to 5", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate}
-            onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const roomQuantityInput = screen.getByLabelText("Room Quantity") as HTMLInputElement;
 
         await act (async () => {
@@ -84,8 +80,7 @@ describe("ModalDialog", () => {
 
 
     it("handles changes to the firstname", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate}
-            onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const firstNameInput = screen.getByLabelText("First Name") as HTMLInputElement;
         await act (async () => {
             userEvent.clear(firstNameInput);
@@ -95,8 +90,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to the lastname", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate}
-            onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const lastNameInput = screen.getByLabelText("Last Name") as HTMLInputElement;
         await act (async () => {
             userEvent.clear(lastNameInput);
@@ -106,8 +100,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to the email", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate}
-            onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const emailInput = screen.getByLabelText("E-Mail") as HTMLInputElement;
         await act (async () => {
             userEvent.clear(emailInput);
@@ -117,8 +110,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to the phone number", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate}
-            onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const phoneInput = screen.getByLabelText("Phone Number") as HTMLInputElement;
         await act (async () => {
             userEvent.clear(phoneInput);
@@ -128,8 +120,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to the street name", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate}
-            onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const streetNameInput = screen.getByLabelText("Street Name") as HTMLInputElement;
         await act (async () => {
             userEvent.clear(streetNameInput);
@@ -139,8 +130,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to the street number", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate}
-            onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const streetNumberInput = screen.getByLabelText("Street Number") as HTMLInputElement;
         await act (async () => {
             userEvent.clear(streetNumberInput);
@@ -150,7 +140,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to the zipcode", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate} onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const zipcodeInput = screen.getByLabelText("ZIP") as HTMLInputElement;
         await act (async () => {
             userEvent.clear(zipcodeInput);
@@ -160,7 +150,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles selection of state", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate} onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const stateInput = screen.getByLabelText("State") as HTMLInputElement;
         await act (async () => {
             userEvent.type(stateInput, "State2{enter}");
@@ -169,7 +159,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to the city", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate} onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const cityInput = screen.getByLabelText("City") as HTMLInputElement;
         await act (async () => {
             userEvent.clear(cityInput);
@@ -179,7 +169,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to personal note", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate} onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const noteInput = screen.getByLabelText("Personal Note") as HTMLInputElement;
         await act (async () => {
             userEvent.clear(noteInput);
@@ -189,7 +179,7 @@ describe("ModalDialog", () => {
     });
 
     it("filters & and = for all text inputs", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate} onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const noteInput = screen.getByLabelText("Personal Note") as HTMLInputElement;
         await act (async () => {
             userEvent.clear(noteInput);
@@ -198,18 +188,8 @@ describe("ModalDialog", () => {
         expect(noteInput.value).toBe("TestTestTest");
     });
 
-    // it("handles selection of payment method", async () => {
-    //     render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate} onDelete={mockOnDelete} forCreate={false} />);
-    //     const paymentRadio = screen.getByLabelText("Credit Card");
-    //     await act (async () => {
-    //         userEvent.click(paymentRadio);
-    //     });
-    //
-    //     // Assert payment method is set to 'Credit Card' in the state, if applicable
-    // });
-    //
     it("handles changes to the reminder switch", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate} onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const reminderSwitch = screen.getByLabelText("Send me a reminder");
         await act (async () => {
             userEvent.click(reminderSwitch);
@@ -218,7 +198,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to the newsletter switch", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate} onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const newsletterSwitch = screen.getByLabelText("Subscribe to newsletter");
         await act (async () => {
             userEvent.click(newsletterSwitch);
@@ -227,7 +207,7 @@ describe("ModalDialog", () => {
     });
 
     it("handles changes to the confirmation checkbox", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate} onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const confirmCheckbox = screen.getByLabelText("I confirm the information given above");
         await act (async () => {
             userEvent.click(confirmCheckbox);
@@ -236,20 +216,20 @@ describe("ModalDialog", () => {
     });
 
     it("calls onUpdate when Save button is clicked", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate} onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} setIsLoading={mockSetIsLoading} onClose={mockOnClose} forCreate={false} />);
         const saveButton = screen.getByText("Save");
         await act (async () => {
             userEvent.click(saveButton);
         });
-        expect(mockOnUpdate).toHaveBeenCalled();
+        expect(mockSetIsLoading).toHaveBeenCalled();
     });
 
     it("calls onDelete when Delete button is clicked", async () => {
-        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} onUpdate={mockOnUpdate} onDelete={mockOnDelete} forCreate={false} />);
+        render(<ModalDialog open={true} row={sampleReservation} onClose={mockOnClose} setIsLoading={mockSetIsLoading} forCreate={false} />);
         const deleteButton = screen.getByText("Delete");
         await act (async () => {
             userEvent.click(deleteButton);
         });
-        expect(mockOnDelete).toHaveBeenCalled();
+        expect(mockSetIsLoading).toHaveBeenCalled();
     });
 });

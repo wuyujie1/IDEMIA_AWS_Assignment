@@ -8,14 +8,19 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { states, maxFirstNameLength, maxLastNameLength, maxRoomQuantity } from "../utils/configs";
 import {roomTypes, extrasOptions} from "../utils/configs";
-import { ModalDialogProps, Reservation } from "../utils/interface";
+import { ModalDialogProps, Reservation, SaveBtnParams } from "../utils/interface";
 import dayjs from "dayjs";
 import PaymentRadioGroup from "./PaymentRadioGroup";
 import Tags from "./Tags";
 import RoomSize from "./RoomSize";
 import InputNames from "./InputNames";
+import { Observable, Subject } from "rxjs";
 
-const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose, row, onDelete, onUpdate, forCreate }) => {
+const deleteBtn = new Subject();
+export const deleteBtn$ = deleteBtn.asObservable();
+const saveBtn: Subject<SaveBtnParams> = new Subject();
+export const saveBtn$: Observable<SaveBtnParams> = saveBtn.asObservable();
+const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose, setIsLoading, row, forCreate }) => {
     const [values, setValues] = useState<Reservation | null>(null);
 
     useEffect(() => {
@@ -100,7 +105,6 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose, row, onDelete,
         <Dialog open={open} onClose={onClose} fullWidth={true} maxWidth={"xl"} style={{ width: "90%", margin: "auto" }}>
             <form>
                 <Grid container spacing={3} sx={{ margin: "2% 2% 2% 5%", width: "70%" }}>
-
                     <Grid item xs={5} sm={4}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
@@ -330,21 +334,30 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ open, onClose, row, onDelete,
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Button
+                            id="save"
                             variant="contained"
                             color="secondary"
                             sx={{marginBottom: "13%"}}
-                            onClick={()=>{onUpdate(values, row);}}
+                            onClick={()=>{
+                                if (row) saveBtn.next({operation: forCreate ? "create" : "update", updatedValues: values, queryParams: row});
+                                setIsLoading(true);
+                                setValues(null);
+                            }}
                         >
                             Save
                         </Button>
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Button
+                            id="delete"
                             disabled={forCreate}
                             variant="contained"
                             color="primary"
                             sx={{marginBottom: "13%"}}
-                            onClick={()=>{onDelete(row);}}
+                            onClick={()=>{
+                                deleteBtn.next(row);
+                                setIsLoading(true);
+                                setValues(null);}}
                         >
                             Delete
                         </Button>

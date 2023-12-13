@@ -1,7 +1,5 @@
-import { MockFetchResponse, Reservation } from "./interface";
-import { fromFetch } from "rxjs/fetch";
-import { of } from "rxjs";
-import React from "react";
+import { Reservation } from "./interface";
+
 import dayjs from "dayjs";
 
 export function initNewRow(): Reservation {
@@ -33,8 +31,8 @@ export function convertDayToString(value: dayjs.Dayjs): string {
     return value.isValid() ? value.format("YYYY-MM-DD") + "T05:00:00.000Z" : "null";
 }
 
-export function initApiInteractionTests() {
-    const mockReservation: Reservation = {
+export function initRowWithData(): Reservation {
+    return {
         arrivaldate: "2021-11-18T05:00:00.000Z",
         departuredate: "",
         roomsize: "",
@@ -56,15 +54,4 @@ export function initApiInteractionTests() {
         newsletter: false,
         confirm: false,
     };
-
-    const mockSetDataUpdating: React.Dispatch<React.SetStateAction<boolean>> = jest.fn();
-    const mockResponse: MockFetchResponse = {
-        ok: true,
-        json: jest.fn().mockResolvedValue({ success: true }),
-        text: jest.fn().mockResolvedValue("Server error")
-    };
-
-    (fromFetch as jest.Mock).mockReturnValue(of(mockResponse));
-    
-    return { mockReservation,  mockSetDataUpdating, mockResponse };
 }
