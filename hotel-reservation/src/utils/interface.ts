@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 export interface SearchParams {
   arrivaldate: dayjs.Dayjs | null;
@@ -46,9 +46,8 @@ export interface Option {
 export interface ModalDialogProps {
   open: boolean;
   onClose: () => void;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
   row: Reservation | null;
-  onDelete: (row: Reservation | null) => void;
-  onUpdate: (row: Reservation | null, oriRow: Reservation | null) => void;
   forCreate: boolean;
 }
 
@@ -83,4 +82,10 @@ export interface MockFetchResponse {
   ok: boolean;
   json: jest.Mock;
   text: jest.Mock;
+}
+
+export interface SaveBtnParams {
+  updatedValues: Reservation,
+  queryParams: Reservation,
+  operation: string
 }
