@@ -99,4 +99,3 @@ jobs:
           title: 'Auto PR from CI'
           body: 'This is an auto-generated PR from CI'
           branch: 'auto-pr-${{ github.run_number }}'
-          base: 'main'
